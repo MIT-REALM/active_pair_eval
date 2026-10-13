@@ -4,7 +4,7 @@
   <img src="docs/toy2d.gif" alt="Static simulated system beside the target system as real labels are acquired" width="860">
 </p>
 
-Project page, with an interactive 2-D demo, paper results, and the supplementary video: [docs/index.html](docs/index.html). Paper: [arXiv:2608.13719](https://arxiv.org/pdf/2608.13719).
+Project page, with an interactive demo, paper results, and the supplementary video: [mit-realm.github.io/active_pair_eval](https://mit-realm.github.io/active_pair_eval/). Paper: [arXiv:2608.13719](https://arxiv.org/pdf/2608.13719).
 
 SCOUT looks for failures of a real system by choosing which scenarios to label next. A mutual-information shortlist proposes scenarios the current labels do not explain. A control variate then re-ranks that shortlist with a cheap proxy, so the next real labels land where the proxy-corrected failure score is high.
 
@@ -23,7 +23,7 @@ export PYTHONPATH=.
 
 Open [notebooks/toy2d.ipynb](notebooks/toy2d.ipynb).
 
-[Open in Colab](https://colab.research.google.com/github/anjaliParashar/scout-code/blob/main/notebooks/toy2d.ipynb)
+[Open in Colab](https://colab.research.google.com/github/MIT-REALM/active_pair_eval/blob/main/notebooks/toy2d.ipynb)
 
 That notebook defines the domain, the mutual-information shortlist, and the control variate in the cells themselves. It does not import this repository.
 
@@ -51,7 +51,7 @@ python scripts/toy2D/compare_all.py --n-rounds 4 --batch-size 5 --n-init 10 \
 
 Open [notebooks/kitti.ipynb](notebooks/kitti.ipynb).
 
-[Open in Colab](https://colab.research.google.com/github/anjaliParashar/scout-code/blob/main/notebooks/kitti.ipynb)
+[Open in Colab](https://colab.research.google.com/github/MIT-REALM/active_pair_eval/blob/main/notebooks/kitti.ipynb)
 
 Each row is one paired frame. `target_failure` is the missed-car score of a frozen detector on real KITTI. `proxy_failure` is the same score on the Virtual KITTI clone. The notebook uses the bundled table and feature matrix, so the image archives are not required.
 
