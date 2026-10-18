@@ -109,7 +109,8 @@ h3 { margin: 0 0 8px; font-size: 20px; }
 .failure-note { margin: 0 0 14px; color: #e7dfd6; font-size: 16px; max-width: 860px; }
 .failure-note strong { color: white; }
 .demo-layout { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 16px; align-items: start; }
-#curves, #tsne { width: 100%; height: auto; background: transparent; display: block; }
+#curves, #tsne, #toy { width: 100%; height: auto; background: transparent; display: block; }
+#toy { aspect-ratio: 16 / 9; }
 #curves { aspect-ratio: 16 / 11; }
 #tsne { aspect-ratio: 1; }
 .legend { display: flex; gap: 14px; flex-wrap: wrap; list-style: none; margin: 8px 0 0; padding: 0; color: #e7dfd6; font-size: 14px; }
@@ -176,6 +177,8 @@ td.best { background: var(--hot-soft); font-weight: 700; }
 
 .video-hero video { width: 100%; border-radius: 16px; background: #111; max-height: 640px; }
 .video-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 14px; }
+.video-grid video { width: 100%; border-radius: 12px; background: #111; aspect-ratio: 1; object-fit: cover; }
+.video-grid.wide video { aspect-ratio: 5 / 2; object-fit: cover; }
 .video-card video, .video-card img { border-radius: 12px; background: #111; width: 100%; }
 .missing {
   margin-top: 10px;
