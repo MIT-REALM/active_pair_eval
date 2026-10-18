@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Coverage-aware failure discovery with paired systems</title>
-  <meta name="description" content="Project page for coverage-aware active evaluation of paired proxy and target systems. A 1D walkthrough of the rule, an interactive KITTI run, and nuPlan and SIMPLER videos.">
+  <meta name="description" content="Project page for coverage-aware active evaluation of paired proxy and target systems. An interactive KITTI run, a 1D walkthrough, and SIMPLER videos.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
@@ -17,7 +17,6 @@
       <nav class="nav-links">
         <a href="#kitti">KITTI</a>
         <a href="#process">Process</a>
-        <a href="#nuplan">nuPlan</a>
         <a href="#simpler">SIMPLER</a>
         <a class="primary" href="https://arxiv.org/pdf/2608.13719">Paper</a>
         <a href="https://github.com/MIT-REALM/active_pair_eval">Code</a>
@@ -89,7 +88,7 @@
     <section class="wrap section" id="process">
       <div class="stage">
         <div class="stage-top">
-          <h2>How a label gets chosen</h2>
+          <h2>Acquisition</h2>
           <div class="controls">
             <button type="button" id="toy-play">Play</button>
             <button type="button" id="toy-pause">Pause</button>
@@ -97,54 +96,30 @@
             <button type="button" id="toy-reset">Restart</button>
           </div>
         </div>
-        <p class="failure-note">One input, two systems. They follow each other, then separate in one place. Each step shortlists the uncovered inputs, then spends the real label where the curves separate.</p>
-        <canvas id="toy" width="960" height="540"></canvas>
+        <canvas id="toy" width="960" height="600"></canvas>
         <ul class="legend">
           <li><i class="swatch ours"></i>Real system</li>
           <li><i class="swatch proxy"></i>Proxy</li>
           <li><i class="swatch mi"></i>Mutual information</li>
         </ul>
         <p class="readout" id="toy-readout">Loading the 1D example…</p>
-      </div>
-      <div class="cards" style="margin-top: 16px">
-        <article class="card">
-          <h3>1. Shortlist</h3>
-          <p>Mutual information proposes inputs the labels already collected do not cover.</p>
-        </article>
-        <article class="card">
-          <h3>2. Ask the proxy</h3>
-          <p>On that shortlist only, keep the input where the proxy and the real system separate.</p>
-        </article>
-        <article class="card">
-          <h3>3. Spend the real label</h3>
-          <p>One new real evaluation lands there. The shortlist is rebuilt from the updated labels.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="wrap section" id="nuplan">
-      <h2>nuPlan</h2>
-      <p class="sub">Closed-loop failures on the nuPlan map for Las Vegas. Roads, crosswalks, and stop lines come from the nuPlan map. The ego vehicle is orange, other vehicles are blue, and pedestrians are teal. The camera images for these logs are not in this checkout, so the view is the map rather than a dashcam.</p>
-      <div class="video-grid">
-        <figure class="video-card">
-          <video controls playsinline preload="metadata" src="assets/nuplan/pickup.mp4?v=2"></video>
-          <figcaption>Pickup and dropoff</figcaption>
-        </figure>
-        <figure class="video-card">
-          <video controls playsinline preload="metadata" src="assets/nuplan/intersection.mp4?v=2"></video>
-          <figcaption>Intersection</figcaption>
-        </figure>
-        <figure class="video-card">
-          <video controls playsinline preload="metadata" src="assets/nuplan/speed.mp4?v=2"></video>
-          <figcaption>Medium speed</figcaption>
-        </figure>
+        <h2 style="margin-top: 28px">Mutual information</h2>
+        <div class="controls" id="mi-presets">
+          <button type="button" class="active" data-preset="0">Tight</button>
+          <button type="button" data-preset="1">Default</button>
+          <button type="button" data-preset="2">Wide</button>
+          <button type="button" data-preset="3">Sharp</button>
+          <button type="button" data-preset="4">Smooth</button>
+        </div>
+        <canvas id="mi-geometry" width="960" height="420"></canvas>
+        <p class="readout" id="mi-geometry-readout"></p>
       </div>
     </section>
 
     <section class="wrap section" id="simpler">
       <h2>SIMPLER</h2>
       <p class="sub">The same grasp, rolled out in the proxy simulator and the target simulator. The interesting case is a success on the proxy and a miss on the target.</p>
-      <div class="video-grid wide">
+      <div class="video-stack">
         <figure class="video-card">
           <video controls playsinline preload="metadata" src="assets/simpler/both_ok.mp4"></video>
           <figcaption>Both succeed</figcaption>
@@ -168,7 +143,7 @@
       · <a href="https://github.com/MIT-REALM/active_pair_eval">Code</a>
     </div>
   </footer>
-  <script src="toy1d.js?v=2"></script>
+  <script src="toy1d.js?v=3"></script>
   <script src="demo.js?v=7"></script>
 </body>
 </html>
