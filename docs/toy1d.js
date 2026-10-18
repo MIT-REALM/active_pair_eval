@@ -8,9 +8,9 @@
   let timer = null;
 
   const captions = [
-    "The solid curve is the real system and the dashed curve is the proxy. They follow each other, then separate near 0.22 and 0.78. Dots are real labels already collected.",
-    "Mutual information is high where the labels collected so far do not reach. The ticks on that curve are the shortlist.",
-    "The next real label is the shortlist point where the proxy and the real system disagree the most.",
+    "Solid is the real system. Dashed is the proxy. Dots are labels already collected.",
+    "The lower curve is mutual information. Ticks are the shortlist, the places those labels do not cover.",
+    "The next real label is the shortlist point where the two curves separate.",
   ];
 
   function round(v, n) {
@@ -46,12 +46,8 @@
     const x0 = demo.x[0];
     const x1 = demo.x[demo.x.length - 1];
     const X = (x) => padL + ((x - x0) / (x1 - x0)) * (w - padL - padR);
-    let ymin = Infinity;
-    let ymax = -Infinity;
-    demo.real.forEach((v, i) => {
-      ymin = Math.min(ymin, v - 2 * demo.realStd[i], demo.sim[i] - 2 * demo.simStd[i]);
-      ymax = Math.max(ymax, v + 2 * demo.realStd[i], demo.sim[i] + 2 * demo.simStd[i]);
-    });
+    const ymin = Math.min(...demo.real, ...demo.sim) - 0.15;
+    const ymax = Math.max(...demo.real, ...demo.sim) + 0.15;
     const Y = (v) => top + ((ymax - v) / (ymax - ymin)) * (mid - top - 18);
     const miMax = Math.max(...s.mi, 1e-6);
     const MY = (v) => mid + 22 + ((miMax - v) / miMax) * (bot - mid - 30);
@@ -72,26 +68,8 @@
       ctx.restore();
     }
 
-    function band(mean, std, color) {
-      ctx.beginPath();
-      mean.forEach((v, i) => {
-        const px = X(demo.x[i]);
-        const py = Y(v + 2 * std[i]);
-        if (i === 0) ctx.moveTo(px, py);
-        else ctx.lineTo(px, py);
-      });
-      for (let i = mean.length - 1; i >= 0; i--) {
-        ctx.lineTo(X(demo.x[i]), Y(mean[i] - 2 * std[i]));
-      }
-      ctx.closePath();
-      ctx.fillStyle = color;
-      ctx.fill();
-    }
-
-    band(demo.sim, demo.simStd, "rgba(76,155,232,0.16)");
-    band(demo.real, demo.realStd, "rgba(228,87,46,0.16)");
-    stroke(demo.sim, "#4c9be8", 2, [6, 4]);
-    stroke(demo.real, "#e4572e", 2.4, []);
+    stroke(demo.sim, "#4c9be8", 2.4, [7, 5]);
+    stroke(demo.real, "#e4572e", 2.8, []);
 
     s.clusters.forEach((c) => {
       ctx.fillStyle = "rgba(255,255,255,0.04)";
@@ -155,13 +133,14 @@
       }
     }
 
-    ctx.fillStyle = "#c8bfb4";
-    ctx.font = "13px sans-serif";
-    ctx.fillText("system value", 8, top + 12);
-    ctx.fillText("mutual information", 8, mid + 16);
-    ctx.fillText("0", X(0.02), h - 8);
+    const label = Math.max(18, Math.round(h * 0.055));
+    ctx.fillStyle = "#f6f1ea";
+    ctx.font = `${label}px "Source Sans 3", sans-serif`;
+    ctx.fillText("value", 12, top + label);
+    ctx.fillText("mutual information", 12, mid + label);
+    ctx.fillText("0", X(demo.x[0]), h - 8);
     ctx.fillText("x", (padL + w - padR) / 2, h - 8);
-    ctx.fillText("1", X(0.98) - 8, h - 8);
+    ctx.fillText("0.44", X(demo.x[demo.x.length - 1]) - 18, h - 8);
 
     const labelCount = s.x.length + (phase >= 2 ? 1 : 0);
     readout.textContent = `Label ${labelCount}. ${captions[phase]} Next x = ${round(s.chosen, 2)}.`;
@@ -199,7 +178,7 @@
   });
   window.addEventListener("resize", draw);
 
-  fetch("assets/toy1d.json?v=1")
+  fetch("assets/toy1d.json?v=2")
     .then((r) => r.json())
     .then((data) => {
       demo = data;
