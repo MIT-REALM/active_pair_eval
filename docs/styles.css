@@ -126,6 +126,8 @@ h3 { margin: 0 0 8px; font-size: 20px; }
 .swatch.real { background: #6fbf73; }
 .swatch.mi { background: #e3b341; }
 .swatch.random { background: #b7aea4; }
+.swatch.missed { background: #dc3230; }
+.swatch.extra { background: #f0c83c; }
 .clip-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
 .clip-row figure { margin: 0; }
 .clip-row img { width: 100%; border-radius: 10px; background: #111; aspect-ratio: 1242 / 375; object-fit: cover; }

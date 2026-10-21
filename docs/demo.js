@@ -196,12 +196,12 @@
     const frame = clip();
     const n = frame.at;
     const run = current();
-    realImg.src = frame.real;
-    proxyImg.src = frame.proxyImg;
+    realImg.src = `${frame.real}?v=2`;
+    proxyImg.src = `${frame.proxyImg}?v=2`;
     realScore.textContent = frame.severe
       ? `severe failure ${frame.target.toFixed(2)} · sequence ${frame.seq}, frame ${frame.frame}`
       : `score ${frame.target.toFixed(2)} · sequence ${frame.seq}, frame ${frame.frame}`;
-    proxyScore.textContent = "Same frame in the Virtual KITTI clone. The curve uses the real score only.";
+    proxyScore.textContent = "Same frame in the Virtual KITTI clone. Green is a labeled car the detector found, red is one it missed, yellow is an extra box.";
     fill.style.width = `${(100 * n) / demo.budget}%`;
     budgetText.textContent = `real labels  ${n} / ${demo.budget}`;
     document.getElementById("n-used").textContent = String(n);
@@ -246,7 +246,7 @@
   document.getElementById("reset").onclick = () => reset(seedSlot + 1);
   window.addEventListener("resize", () => { resize(); if (demo) render(); });
 
-  fetch("assets/kitti_demo.json?v=6")
+  fetch("assets/kitti_demo.json?v=7")
     .then((response) => response.json())
     .then((data) => {
       demo = data;
